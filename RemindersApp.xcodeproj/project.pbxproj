@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2337713B2C2F0D43001B2BCC /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2337713A2C2F0D43001B2BCC /* ListViewModel.swift */; };
+		2337713E2C2F1A15001B2BCC /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2337713D2C2F1A15001B2BCC /* Reminder.swift */; };
+		233771422C2F1C33001B2BCC /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233771412C2F1C33001B2BCC /* Date+Extension.swift */; };
+		233771452C303E2D001B2BCC /* ReminderListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233771442C303E2D001B2BCC /* ReminderListTableViewCell.swift */; };
 		2368177B2C29C674002E855A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2368177A2C29C674002E855A /* AppDelegate.swift */; };
 		2368177D2C29C674002E855A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2368177C2C29C674002E855A /* SceneDelegate.swift */; };
-		2368177F2C29C674002E855A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2368177E2C29C674002E855A /* ViewController.swift */; };
+		2368177F2C29C674002E855A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2368177E2C29C674002E855A /* ListViewController.swift */; };
 		236817842C29C676002E855A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 236817832C29C676002E855A /* Assets.xcassets */; };
 		236817872C29C676002E855A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 236817852C29C676002E855A /* LaunchScreen.storyboard */; };
 		236817902C29C882002E855A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2368178F2C29C882002E855A /* SnapKit */; };
@@ -17,10 +21,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2337713A2C2F0D43001B2BCC /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		2337713D2C2F1A15001B2BCC /* Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
+		233771412C2F1C33001B2BCC /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		233771442C303E2D001B2BCC /* ReminderListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListTableViewCell.swift; sourceTree = "<group>"; };
 		236817772C29C674002E855A /* RemindersApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemindersApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2368177A2C29C674002E855A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2368177C2C29C674002E855A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2368177E2C29C674002E855A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2368177E2C29C674002E855A /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		236817832C29C676002E855A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		236817862C29C676002E855A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		236817882C29C676002E855A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -39,6 +47,64 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		233771372C2F0C26001B2BCC /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				2368177A2C29C674002E855A /* AppDelegate.swift */,
+				2368177C2C29C674002E855A /* SceneDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		233771382C2F0C33001B2BCC /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				233771392C2F0C5A001B2BCC /* ListScreen */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		233771392C2F0C5A001B2BCC /* ListScreen */ = {
+			isa = PBXGroup;
+			children = (
+				2368177E2C29C674002E855A /* ListViewController.swift */,
+				2337713A2C2F0D43001B2BCC /* ListViewModel.swift */,
+			);
+			path = ListScreen;
+			sourceTree = "<group>";
+		};
+		2337713C2C2F1A06001B2BCC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2337713D2C2F1A15001B2BCC /* Reminder.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2337713F2C2F1C13001B2BCC /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				233771402C2F1C19001B2BCC /* Extensions */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		233771402C2F1C19001B2BCC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				233771412C2F1C33001B2BCC /* Date+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		233771432C303DF0001B2BCC /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				233771442C303E2D001B2BCC /* ReminderListTableViewCell.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
 		2368176E2C29C674002E855A = {
 			isa = PBXGroup;
 			children = (
@@ -58,9 +124,11 @@
 		236817792C29C674002E855A /* RemindersApp */ = {
 			isa = PBXGroup;
 			children = (
-				2368177A2C29C674002E855A /* AppDelegate.swift */,
-				2368177C2C29C674002E855A /* SceneDelegate.swift */,
-				2368177E2C29C674002E855A /* ViewController.swift */,
+				2337713F2C2F1C13001B2BCC /* Helper */,
+				2337713C2C2F1A06001B2BCC /* Models */,
+				233771432C303DF0001B2BCC /* CustomViews */,
+				233771372C2F0C26001B2BCC /* Delegates */,
+				233771382C2F0C33001B2BCC /* UI */,
 				236817832C29C676002E855A /* Assets.xcassets */,
 				236817852C29C676002E855A /* LaunchScreen.storyboard */,
 				236817882C29C676002E855A /* Info.plist */,
@@ -145,9 +213,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2368177F2C29C674002E855A /* ViewController.swift in Sources */,
+				233771452C303E2D001B2BCC /* ReminderListTableViewCell.swift in Sources */,
+				2368177F2C29C674002E855A /* ListViewController.swift in Sources */,
 				2368177B2C29C674002E855A /* AppDelegate.swift in Sources */,
+				2337713B2C2F0D43001B2BCC /* ListViewModel.swift in Sources */,
 				2368177D2C29C674002E855A /* SceneDelegate.swift in Sources */,
+				2337713E2C2F1A15001B2BCC /* Reminder.swift in Sources */,
+				233771422C2F1C33001B2BCC /* Date+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

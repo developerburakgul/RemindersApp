@@ -8,27 +8,26 @@
 import UIKit
 import SnapKit
 
-class ReminderListTableViewCell: UITableViewCell {
+class ListTableViewCell: UITableViewCell {
     
     static let identifier = "ReminderListTableViewCell"
     
-    var doneButtonAction : (() -> Void)?
+    var doneButtonTappedAction: (() -> Void)?
     
-    private var reminder : Reminder? {
+    //MARK: - Private Attributes
+    private var viewModel : ListTableViewCellModel? {
         didSet {
-            updateDoneButton()
+            updateUI()
         }
     }
     
     
-    //MARK: - Private attributes
+    //MARK: - Private UI Components
     private var doneButton : UIButton = {
         var button = UIButton()
         button.setImage(UIImage(systemName: "circle"), for: .normal)
         button.configuration?.cornerStyle = .capsule
         button.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-        
-        
         return button
     }()
     
@@ -36,8 +35,6 @@ class ReminderListTableViewCell: UITableViewCell {
         let label = UILabel()
         label.text = "Burak"
         label.numberOfLines = 0
-        
-        
         return label
     }()
     
@@ -45,8 +42,6 @@ class ReminderListTableViewCell: UITableViewCell {
         let label = UILabel()
         label.text = "description"
         label.numberOfLines = 0
-        
-        
         return label
     }()
     
@@ -66,7 +61,7 @@ class ReminderListTableViewCell: UITableViewCell {
     
     
     
-    
+    //MARK: - İnit Functions
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
@@ -118,29 +113,29 @@ class ReminderListTableViewCell: UITableViewCell {
     
     //MARK: - Private Functions
     
-    @objc private func updateDoneButton() {
-        
-        var imageName = "circle"
-        if reminder?.isDone == true {
-            imageName = "circle.fill"
-        }
-        doneButton.setImage(UIImage(systemName: imageName), for: .normal)
-        
+    
+    
+    private func updateUI() {
+        guard let viewModel = self.viewModel else { return  }
+        self.titleLabel.text = viewModel.title
+        self.descriptionLabel.text = viewModel.description
+        self.dateLabel.text = viewModel.dateString
+        self.dateLabel.textColor = viewModel.isLateDate ? .red : .label
+        self.doneButton.setImage(UIImage(systemName: viewModel.doneButtonImageName), for: .normal)
     }
     
     
     //MARK: - Public Functions
     
-    func configure(with reminder : Reminder) {
-        self.reminder = reminder
-        titleLabel.text = reminder.title
-        descriptionLabel.text = reminder.description
-        dateLabel.text = reminder.endDate?.toString()
+    func configure(with viewModel: ListTableViewCellModel) {
+        self.viewModel = viewModel
         
     }
     
     @objc private func doneButtonTapped() {
-        doneButtonAction?()
+        viewModel?.toggleDone()
+        doneButtonTappedAction?()
+        
     }
     
     
@@ -148,7 +143,7 @@ class ReminderListTableViewCell: UITableViewCell {
 }
 
 #Preview(""){
-    ReminderListTableViewCell(style: .default, reuseIdentifier: ReminderListTableViewCell.identifier)
+    ListTableViewCell(style: .default, reuseIdentifier: ListTableViewCell.identifier)
     
 }
 

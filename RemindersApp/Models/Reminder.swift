@@ -7,18 +7,22 @@
 
 import Foundation
 
-struct Reminder {
+struct Reminder : Codable {
+    var uuid: UUID
     var title : String
     var description : String?
     var isDone : Bool = false
-    var endDate : Date?
+    var date : Date?
+    var time : Date?
     
     
-    init(title: String, description: String? = nil, isDone: Bool = false, endDate: Date? = nil) {
+    init( title: String, description: String? = nil, isDone: Bool, date: Date? = nil, time: Date? = nil) {
+        self.uuid = UUID()
         self.title = title
         self.description = description
         self.isDone = isDone
-        self.endDate = endDate
+        self.date = date
+        self.time = time
     }
     
 }

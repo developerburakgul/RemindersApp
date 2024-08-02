@@ -7,25 +7,29 @@
 
 import UIKit
 
-class ReminderCreateViewController: BaseReminderViewController<ReminderCreateViewModel> {
+class ReminderCreateViewController: BaseReminderViewController<ReminderCreateViewModel> ,UITextViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Create"
+        titleTextView.externalDelegate = self
+                descriptionTextView.externalDelegate = self
+        
     }
     
     override func doneTapped() {
         super.doneTapped()
         viewModel.saveReminder(titleTextView.text, descriptionTextView.text, dateView.getDate, clockView.getDate)
     }
+    
+    // MARK: - UITextViewDelegate
+    override func textViewDidChange(_ textView: UITextView) {
+        let isTitleTextNotEmpty = !titleTextView.text.isEmpty
+        doneBarButton.isEnabled = isTitleTextNotEmpty
+    }
+    
 }
-//extension ReminderCreateViewController: UITextViewDelegate {
-//    func textViewDidChange(_ textView: UITextView) {
-//        if textView == titleTextView {
-//            doneBarButton.isEnabled = !textView.text.isEmpty
-//        }
-//    }
-//}
+
 
 #Preview(""){
     UINavigationController(rootViewController: ReminderCreateViewController(viewModel: ReminderCreateViewModel()))

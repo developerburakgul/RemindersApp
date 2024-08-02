@@ -18,7 +18,7 @@ class ReminderManager {
     //MARK: - İnitializer
     
     static let shared: ReminderManager = .init()
-
+    
     private init() {
         loadData()
     }
@@ -44,6 +44,23 @@ class ReminderManager {
     
     func getReminders() -> [Reminder] {
         return reminders
+    }
+    func toggleReminder(_ reminder : Reminder) {
+        for (index, element) in reminders.enumerated() {
+            if element.uuid == reminder.uuid {
+                reminders[index].isDone = !element.isDone
+            }
+        }
+        saveData()
+    }
+    
+    func update(old oldReminder : Reminder, new newReminder : Reminder) {
+        for (index, element) in reminders.enumerated() {
+            if element.uuid == oldReminder.uuid {
+                reminders[index] = newReminder
+            }
+        }
+        saveData()
     }
     
     //MARK: - Private Functions

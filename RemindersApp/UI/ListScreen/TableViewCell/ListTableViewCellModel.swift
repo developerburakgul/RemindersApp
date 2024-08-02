@@ -12,6 +12,7 @@ class ListTableViewCellModel {
     
     
     private var reminder : Reminder
+    private var reminderManager : ReminderManager = ReminderManager.shared
     
     init(reminder: Reminder) {
         self.reminder = reminder
@@ -28,54 +29,33 @@ class ListTableViewCellModel {
         reminder.description
     }
     var dateString : String? {
-        
-//        guard let selectedDate = reminder.endDate else { return nil  }
-//        
-//        let calendar = Calendar.current
-//        let today = Date()
-//        
-//        let components = calendar.dateComponents([.day], from: today, to: selectedDate)
-//        guard let dayDifference = components.day else {
-//            return nil
-//        }
-//        
-//        switch dayDifference {
-//        case -2:
-//            return "Evvelsi gün"
-//        case -1:
-//            return "Dün"
-//        case 0:
-//            return "Bugün"
-//        case 1:
-//            return "Yarın"
-//        case 2:
-//            return "Öbür gün"
-//        default:
-//            return reminder.endDate?.toString()
-//        }
         guard let date = reminder.date else { return nil }
-        return date.getDateString + " " +  date.timeString
-    
-}
-
-var doneButtonImageName : String {
-    reminder.isDone ? "circle" : "circle.fill"
-}
-var isLateDate : Bool {
-    guard let date = reminder.date else {return false}
-    if date.compare(Date.now) == .orderedAscending  {
-        return true
+        if let time = reminder.time {
+            return date.getDateWithDot + " " + time.timeString
+        }
+        return date.getDateWithDot
+        
     }
-    return false
-}
-
-
-func toggleDone() {
-    reminder.isDone.toggle()
-}
-
-
-
-
-
+    
+    var doneButtonImageName : String {
+        reminder.isDone ? "circle.fill" : "circle"
+    }
+    var isLateDate : Bool {
+        guard let date = reminder.date else {return false}
+        if date.compare(Date.now) == .orderedAscending  {
+            return true
+        }
+        return false
+    }
+    
+    
+    func toggleDone() {
+        reminder.isDone.toggle()
+        reminderManager.toggleReminder(reminder)
+    }
+    
+    
+    
+    
+    
 }

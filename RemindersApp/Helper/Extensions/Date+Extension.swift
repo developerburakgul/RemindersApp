@@ -17,33 +17,31 @@ extension Date {
     
     var  getDateString : String{
         
+
         
         let calendar = Calendar.current
-        let today = Date()
-        
-        let components = calendar.dateComponents([.day], from: today, to: self)
-        guard let dayDifference = components.day else {
-            fatalError("sanane")
-        }
-        
-        
+                let todayStart = calendar.startOfDay(for: Date())
+                let selfStart = calendar.startOfDay(for: self)
+                
+                let components = calendar.dateComponents([.day], from: todayStart, to: selfStart)
+                guard let dayDifference = components.day else {
+                    fatalError()
+                }
+                
         switch dayDifference {
-        case -2:
-            return "Evvelsi gün"
-        case -1:
-            return "Dün"
-        case 0:
-            return "Bugün"
-        case 1:
-            return "Yarın"
-        case 2:
-            return "Öbür gün"
-        default:
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "tr_TR")
-            formatter.dateFormat = "dd MMMM yyyy EEEE"
-            return formatter.string(from: self)
-        }
+
+                case -1:
+                    return "Yesterday"
+                case 0:
+                    return "Today"
+                case 1:
+                    return "Tomorrow"
+                default:
+                    let formatter = DateFormatter()
+                    formatter.locale = Locale(identifier: "en_US")
+                    formatter.dateFormat = "dd MMMM yyyy EEEE"
+                    return formatter.string(from: self)
+                }   
     }
     var timeString : String {
         let dateFormatter = DateFormatter()
@@ -53,7 +51,31 @@ extension Date {
 
         // Tarih nesnesini formatlayarak stringe çevir
         let timeString = dateFormatter.string(from: self)
-        print("timestring is : \(timeString)")
         return timeString
+    }
+    
+    var getDateWithDot : String {
+        let calendar = Calendar.current
+            let todayStart = calendar.startOfDay(for: Date())
+            let selfStart = calendar.startOfDay(for: self)
+            
+            let components = calendar.dateComponents([.day], from: todayStart, to: selfStart)
+            guard let dayDifference = components.day else {
+                fatalError()
+            }
+            
+            switch dayDifference {
+            case -1:
+                return "Yesterday"
+            case 0:
+                return "Today"
+            case 1:
+                return "Tomorrow"
+            default:
+                let formatter = DateFormatter()
+                formatter.locale = Locale(identifier: "en_US")
+                formatter.dateFormat = "dd.MM.yyyy"
+                return formatter.string(from: self)
+            }
     }
 }

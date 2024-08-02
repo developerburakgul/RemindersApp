@@ -41,7 +41,4 @@ class ReminderDetailViewController: BaseReminderViewController<ReminderDetailVie
     
     }
     
-    @objc override func doneTapped() {
-        // doneTapped fonksiyonunu override etmemize gerek yok çünkü detay görüntüleme ekranında bu fonksiyon kullanılmayacak.
-    }
 }

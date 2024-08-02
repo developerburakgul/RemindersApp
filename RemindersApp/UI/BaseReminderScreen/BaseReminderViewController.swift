@@ -47,12 +47,17 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
     var titleTextView: PlaceHolderTextView = {
         let titleTextView = PlaceHolderTextView(frame: .null, textContainer: .none, placeholder: "Title", placeholderColor: .secondaryLabel)
         titleTextView.backgroundColor = .gray
+        titleTextView.font = UIFont.systemFont(ofSize: 24)
+        
         return titleTextView
     }()
     
     var descriptionTextView: PlaceHolderTextView = {
         let descriptionTextView = PlaceHolderTextView(frame: .null, textContainer: .none, placeholder: "Description...", placeholderColor: .secondaryLabel)
         descriptionTextView.backgroundColor = .gray
+        descriptionTextView.font = UIFont.systemFont(ofSize: 24)
+        
+        
         return descriptionTextView
     }()
     
@@ -73,6 +78,8 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
         view.backgroundColor = .systemBackground
         setup()
         titleTextView.externalDelegate = self as? any UITextViewDelegate
+        descriptionTextView.externalDelegate = self as? any UITextViewDelegate
+        
         print("base reminder view controller view did load")
     }
     
@@ -87,6 +94,8 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
         super.viewWillDisappear(animated)
         print("base reminder view controller view will disappear")
     }
+    
+    
     
     // MARK: - Init Functions
     init(viewModel: ViewModelType) {
@@ -110,6 +119,8 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
         setupDescriptionTextView()
         setupDateView()
         setupClockView()
+        setupGestureRecognizer()
+        
     }
     
     private func setupScrollView() {
@@ -179,6 +190,17 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
         }
     }
     
+    private func setupGestureRecognizer() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false  // Diğer dokunmatik olayları iptal etmeyecek.
+        view.addGestureRecognizer(tapGesture)  // Ana view'e gesture ekleniyor.
+    }
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)  // Tüm aktif text field veya text view'ları kapatır.
+    }
+
+    
     @objc func cancelTapped() {
         self.dismiss(animated: true, completion: nil)
         print(#function)
@@ -189,23 +211,16 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
         print(#function)
         // Bu fonksiyon alt sınıflarda override edilecektir.
     }
-    
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        // Resign first responder for other views
-        view.endEditing(true)
-        return true
-    }
-    
     func textViewDidChange(_ textView: UITextView) {
-        if textView == titleTextView {
-            doneBarButton.isEnabled = !textView.text.isEmpty
-        }
+        // Base class, textView changes should be handled in derived classes if needed
     }
-    
-    
-    
     
 }
+
+
+
+
+
 
 
 

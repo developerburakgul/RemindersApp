@@ -21,15 +21,30 @@ class ReminderListViewController: UIViewController {
     }()
     
     private var addButton : UIButton = {
+
+        
         let button = UIButton()
-        button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
-        button.addTarget(self, action: #selector(createNewReminder), for: .touchUpInside)
-        return button
+            
+            // Butonun arka planını ve ikon rengini ayarlıyoruz
+            let config = UIImage.SymbolConfiguration(scale: .large)
+            let image = UIImage(systemName: "plus.circle.fill", withConfiguration: config)
+            button.setImage(image, for: .normal)
+            
+            button.backgroundColor = .systemBackground // Arka plan rengini değiştirdik
+            button.tintColor = .systemBlue // + işaretinin rengini değiştirdik
+            button.addTarget(self, action: #selector(createNewReminder), for: .touchUpInside)
+            
+            // Butonun içerik kenar boşluklarını ayarlıyoruz
+            
+            
+            return button
     }()
     
     private var label : UILabel = {
         let label = UILabel()
         label.text = "Create a new reminder"
+        label.textColor = .systemBlue
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         
         
         
@@ -72,8 +87,9 @@ class ReminderListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.refreshReminders()
+        setupNavigationBar()
     }
-
+    
     
     
     
@@ -126,6 +142,12 @@ class ReminderListViewController: UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.rightBarButtonItem = ellipsisCircleBarButton
         
+        // Başlık rengini ayarlıyoruz
+            let titleAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
+            self.navigationController?.navigationBar.titleTextAttributes = titleAttributes
+            self.navigationController?.navigationBar.largeTitleTextAttributes = titleAttributes
+        
+        
     }
     
     
@@ -142,8 +164,8 @@ class ReminderListViewController: UIViewController {
         
     }
     
-    private func editReminder() {
-        let reminderEditViewController = ReminderEditViewController(viewModel: ReminderEditViewModel())
+    private func editReminder(_ reminder : Reminder) {
+        let reminderEditViewController = ReminderEditViewController(viewModel: ReminderEditViewModel(reminder: reminder))
         
         
         let navigationController = UINavigationController(rootViewController: reminderEditViewController)
@@ -160,7 +182,7 @@ class ReminderListViewController: UIViewController {
         present(navigationController, animated: true, completion: nil)
     }
     
-
+    
     
     //MARK: - Setup TableView Delegates
     
@@ -209,20 +231,24 @@ extension ReminderListViewController : UITableViewDelegate {
             completionHandler(true)
         }
         deleteAction.image = UIImage(systemName: "trash")
+        
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let reminder = viewModel.getReminder(indexPath.row)
         
-    
         let editAction = UIContextualAction(style: .normal, title: "Edit") {  (action, view, completionHandler) in
             
-            self.editReminder()
+            self.editReminder(reminder)
             completionHandler(true)
         }
-        editAction.image = UIImage(systemName: "pencil")
+
         editAction.backgroundColor = .systemBlue
+        editAction.image = UIImage(systemName: "pencil")
         return UISwipeActionsConfiguration(actions: [editAction])
+        
+        
         
     }
     

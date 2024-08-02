@@ -110,40 +110,26 @@ class DateView: UIView {
     }
     
     func setDate(_ date: Date) {
-//        if datePickerMode == .date {
-//            datePicker.date = date
-//            dateLabel.text = viewModel.dateLabelText(from: date)
-//            dateLabel.isHidden = false
-//        }
-//        datePicker.isHidden = false
-//        switchButton.isOn = true
-//        setOnlyShowMode()
+
         if !viewModel.isClock {
             datePicker.date = date
             dateLabel.text = viewModel.dateLabelText(from: date)
             dateLabel.isHidden = false
+            datePicker.isHidden = false
         }
-        datePicker.isHidden = false
+        
         switchButton.isOn = true
         setOnlyShowMode()
     }
     
     func setTime(_ time: Date) {
-//        if datePickerMode == .time {
-//            datePicker.date = time
-//            dateLabel.text = viewModel.dateLabelText(from: time)
-//            dateLabel.isHidden = false
-//        }
-//        datePicker.isHidden = false
-//        switchButton.isOn = true
-//        setOnlyShowMode()
-        
         if viewModel.isClock {
             datePicker.date = time
             dateLabel.text = viewModel.dateLabelText(from: time)
             dateLabel.isHidden = false
+            datePicker.isHidden = false
         }
-        datePicker.isHidden = false
+        
         switchButton.isOn = true
         setOnlyShowMode()
         
@@ -253,17 +239,29 @@ class DateView: UIView {
     }
     
     @objc private func switchButtonChanged(_ sender: UISwitch) {
-        viewModel.isShowDate = sender.isOn
-        datePicker.isHidden = !viewModel.isShowDate
-        if viewModel.isShowDate {
-            dateLabel.isHidden = false
-            dateLabel.text = viewModel.dateLabelText(from: datePicker.date)
-        }else {
-            dateLabel.isHidden = true
-        }
+//        viewModel.isShowDate = sender.isOn
+//        datePicker.isHidden = !viewModel.isShowDate
+//        if viewModel.isShowDate {
+//            dateLabel.isHidden = false
+//            dateLabel.text = viewModel.dateLabelText(from: datePicker.date)
+//        }else {
+//            dateLabel.isHidden = true
+//        }
+        DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.viewModel.isShowDate = sender.isOn
+                self.datePicker.isHidden = !self.viewModel.isShowDate
+                if self.viewModel.isShowDate {
+                    self.dateLabel.isHidden = false
+                    self.dateLabel.text = self.viewModel.dateLabelText(from: self.datePicker.date)
+                } else {
+                    self.dateLabel.isHidden = true
+                }
+            }
         
     }
     
+        
 }
 
 

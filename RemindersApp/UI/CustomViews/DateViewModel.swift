@@ -26,7 +26,7 @@ struct DateViewModel {
         if isClock {
             return date.timeString
         }
-        return date.getDateString ?? "No value"
+        return date.getDateString 
         
     }
 

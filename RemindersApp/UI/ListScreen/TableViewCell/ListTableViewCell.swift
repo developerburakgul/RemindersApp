@@ -42,6 +42,7 @@ class ListTableViewCell: UITableViewCell {
         let label = UILabel()
         label.text = "description"
         label.numberOfLines = 0
+        label.textColor = .secondaryLabel
         return label
     }()
     
@@ -49,6 +50,7 @@ class ListTableViewCell: UITableViewCell {
         let label = UILabel()
         label.text = Date.now.toString()
         label.numberOfLines = 0
+        label.textColor = .secondaryLabel
         return label
     }()
     
@@ -120,7 +122,7 @@ class ListTableViewCell: UITableViewCell {
         self.titleLabel.text = viewModel.title
         self.descriptionLabel.text = viewModel.description
         self.dateLabel.text = viewModel.dateString
-        self.dateLabel.textColor = viewModel.isLateDate ? .red : .label
+        self.dateLabel.textColor = viewModel.isLateDate ? .red : .secondaryLabel
         self.doneButton.setImage(UIImage(systemName: viewModel.doneButtonImageName), for: .normal)
     }
     

@@ -15,8 +15,8 @@ class ReminderDetailViewController: BaseReminderViewController<ReminderDetailVie
         self.doneBarButton.isHidden = true
         self.titleTextView.isEditable = false
         self.descriptionTextView.isEditable = false
-//        self.dateView.setOnlyShowMode()
-//        self.clockView.setOnlyShowMode()
+        self.dateView.setOnlyShowMode()
+        self.clockView.setOnlyShowMode()
         
         // Mevcut reminder verilerini yükleyin ve UI bileşenlerine atayın.
         loadReminderData()

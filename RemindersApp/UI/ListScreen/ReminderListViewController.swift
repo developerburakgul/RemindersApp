@@ -15,29 +15,32 @@ class ReminderListViewController: UIViewController {
     private var viewModel : ReminderListViewModel
     
     //MARK: - UI Components
+    
+    
     private var tableView : UITableView = {
         let tableView = UITableView()
         return tableView
     }()
     
+    
     private var addButton : UIButton = {
-
+        
         
         let button = UIButton()
-            
-            // Butonun arka planını ve ikon rengini ayarlıyoruz
-            let config = UIImage.SymbolConfiguration(scale: .large)
-            let image = UIImage(systemName: "plus.circle.fill", withConfiguration: config)
-            button.setImage(image, for: .normal)
-            
-            button.backgroundColor = .systemBackground // Arka plan rengini değiştirdik
-            button.tintColor = .systemBlue // + işaretinin rengini değiştirdik
-            button.addTarget(self, action: #selector(createNewReminder), for: .touchUpInside)
-            
-            // Butonun içerik kenar boşluklarını ayarlıyoruz
-            
-            
-            return button
+        
+        // Butonun arka planını ve ikon rengini ayarlıyoruz
+        let config = UIImage.SymbolConfiguration(scale: .large)
+        let image = UIImage(systemName: "plus.circle.fill", withConfiguration: config)
+        button.setImage(image, for: .normal)
+        
+        button.backgroundColor = .systemBackground // Arka plan rengini değiştirdik
+        button.tintColor = .systemBlue // + işaretinin rengini değiştirdik
+        button.addTarget(self, action: #selector(createNewReminder), for: .touchUpInside)
+        
+        // Butonun içerik kenar boşluklarını ayarlıyoruz
+        
+        
+        return button
     }()
     
     private var label : UILabel = {
@@ -59,6 +62,21 @@ class ReminderListViewController: UIViewController {
             action: nil)
         return barButton
     }()
+    private var emptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = """
+You have no reminders
+Add a new reminder to get started! 😊
+"""
+        label.textAlignment = .center
+        label.textColor = .label
+//        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        label.font = UIFont.preferredFont(forTextStyle: .title2)
+        label.isHidden = true
+        label.numberOfLines = 0
+        
+        return label
+    }()
     
     //MARK: - İnit
     
@@ -72,6 +90,10 @@ class ReminderListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     //MARK: - LifeCycle Methods
     
     override func viewDidLoad() {
@@ -82,12 +104,14 @@ class ReminderListViewController: UIViewController {
         viewModel.remindersDidRefresh = {
             self.tableView.reloadData()
         }
+        updateEmptyLabelVisibility()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.refreshReminders()
         setupNavigationBar()
+        updateEmptyLabelVisibility()
     }
     
     
@@ -95,16 +119,34 @@ class ReminderListViewController: UIViewController {
     
     //MARK: - Setup
     private func setup(){
+        setupNotificationCenter()
         setupViews()
         setupTableViewDelegates()
+        updateEmptyLabelVisibility()
     }
+    
+    private func setupNotificationCenter(){
+        NotificationCenter.default.addObserver(self, selector: #selector(baseReminderViewControllerDidDisAppear), name: .baseReminderViewControllerWillDissAppear, object: nil)
+    }
+    
     
     //MARK: - Setup Views
     private func setupViews(){
+        
         setupTableView()
+        setupEmptyLabel()
         setupAddButton()
         setupLabel()
         setupNavigationBar()
+    }
+   
+    
+    private func setupEmptyLabel() {
+        view.addSubview(emptyLabel)
+        emptyLabel.snp.makeConstraints { make in
+            make.centerY.centerX.equalToSuperview()
+            make.edges.equalToSuperview()
+        }
     }
     
     private func setupTableView(){
@@ -143,9 +185,9 @@ class ReminderListViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = ellipsisCircleBarButton
         
         // Başlık rengini ayarlıyoruz
-            let titleAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
-            self.navigationController?.navigationBar.titleTextAttributes = titleAttributes
-            self.navigationController?.navigationBar.largeTitleTextAttributes = titleAttributes
+        let titleAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
+        self.navigationController?.navigationBar.titleTextAttributes = titleAttributes
+        self.navigationController?.navigationBar.largeTitleTextAttributes = titleAttributes
         
         
     }
@@ -158,7 +200,7 @@ class ReminderListViewController: UIViewController {
         
         
         let navigationController = UINavigationController(rootViewController: createViewController)
-        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.modalPresentationStyle = .pageSheet
         present(navigationController, animated: true, completion: nil)
         
         
@@ -169,7 +211,7 @@ class ReminderListViewController: UIViewController {
         
         
         let navigationController = UINavigationController(rootViewController: reminderEditViewController)
-        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.modalPresentationStyle = .pageSheet
         present(navigationController, animated: true, completion: nil)
     }
     
@@ -178,8 +220,19 @@ class ReminderListViewController: UIViewController {
         
         
         let navigationController = UINavigationController(rootViewController: reminderDetailViewController)
-        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.modalPresentationStyle = .pageSheet
         present(navigationController, animated: true, completion: nil)
+    }
+    
+    private func updateEmptyLabelVisibility() {
+        emptyLabel.isHidden = viewModel.reminderCount > 0
+    }
+    
+    @objc private func baseReminderViewControllerDidDisAppear() {
+        viewModel.refreshReminders()
+        setupNavigationBar()
+        updateEmptyLabelVisibility()
+        
     }
     
     
@@ -228,11 +281,15 @@ extension ReminderListViewController : UITableViewDelegate {
         let deleteAction = UIContextualAction(style: .destructive, title: "Remove") {  (action, view, completionHandler) in
             // Silme işlemini burada gerçekleştir
             self.viewModel.delete(self.viewModel.getReminder(indexPath.row))
+            self.updateEmptyLabelVisibility()
             completionHandler(true)
         }
         deleteAction.image = UIImage(systemName: "trash")
         
+        
         return UISwipeActionsConfiguration(actions: [deleteAction])
+        
+        
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -243,7 +300,7 @@ extension ReminderListViewController : UITableViewDelegate {
             self.editReminder(reminder)
             completionHandler(true)
         }
-
+        
         editAction.backgroundColor = .systemBlue
         editAction.image = UIImage(systemName: "pencil")
         return UISwipeActionsConfiguration(actions: [editAction])

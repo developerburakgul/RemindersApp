@@ -23,6 +23,7 @@ class PlaceHolderTextView: UITextView {
         configurePlaceholder(placeholder: placeholder, color: placeholderColor)
         // here is very important because this assignment runs hide/show label
         self.delegate = self
+        setupUI()
         
         
     }
@@ -50,6 +51,19 @@ class PlaceHolderTextView: UITextView {
         
         placeHolderLabel.isHidden = !self.text.isEmpty
     }
+    
+    private func setupUI() {
+           layer.cornerRadius = 8.0 // Köşe yuvarlaklığı ayarlaması
+           layer.masksToBounds = true
+           layer.borderWidth = 1.0
+           layer.borderColor = UIColor.systemGray3.cgColor
+           
+           // Gölge ayarlaması
+           layer.shadowColor = UIColor.black.cgColor
+           layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        layer.shadowOpacity = 0.1
+           layer.shadowRadius = 2.0
+       }
     
     // These 2 functions check whether it allows working with another delegate.
     override func responds(to aSelector: Selector!) -> Bool {
@@ -85,12 +99,14 @@ extension PlaceHolderTextView : UITextViewDelegate {
         // in here , there may be other works
         externalDelegate?.textViewDidChange?(textView)
         
+        
+        
     }
 }
 
-//#Preview(""){
-//
-//}
 
 
+#Preview(""){
+    UINavigationController(rootViewController: ReminderEditViewController(viewModel: ReminderEditViewModel(reminder: Reminder(title: "deneme", isDone: false))))
+}
 

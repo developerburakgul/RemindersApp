@@ -13,26 +13,34 @@ class DateView: UIView {
     private var viewModel : DateViewModel
     private var datePickerMode : UIDatePicker.Mode
     private var datePickerStyle : UIDatePickerStyle
+    private let heigtOfScreen = UIScreen.main.bounds.height
+    private let widthOfScreen = UIScreen.main.bounds.width
     
     //MARK: - UI Components
     
     private let imageView : UIImageView = {
+    
         let imageView = UIImageView()
-        imageView.backgroundColor = .red
-        imageView.image = UIImage(systemName: "star")
-        return imageView
+            imageView.backgroundColor = .red
+            imageView.tintColor = .white
+            imageView.layer.cornerRadius = 6
+            imageView.layer.masksToBounds = true
+        imageView.contentMode = .center
+
+            return imageView
     }()
     
     private let titleLabel : UILabel = {
         let titleLabel = UILabel()
-        titleLabel.backgroundColor = .red
+//        titleLabel.backgroundColor = .red
         titleLabel.text = "Title"
+        titleLabel.textColor = .label
         return titleLabel
     }()
     
     private let dateLabel : UILabel = {
         let dateLabel  = UILabel()
-        dateLabel.backgroundColor = .green
+//        dateLabel.backgroundColor = .green
         dateLabel.textColor = .systemBlue
         dateLabel.isHidden = true
         return dateLabel
@@ -41,14 +49,14 @@ class DateView: UIView {
     private let labelStackView : UIStackView = {
         let labelStackView = UIStackView()
         labelStackView.axis = .vertical
-        labelStackView.backgroundColor = .systemPink
+//        labelStackView.backgroundColor = .systemPink
         labelStackView.distribution = .fillEqually
         return labelStackView
     }()
     
     private let switchButton : UISwitch = {
         let switchButton  = UISwitch()
-        switchButton.backgroundColor = .systemOrange
+//        switchButton.backgroundColor = .systemOrange
         switchButton.addTarget(self, action: #selector(switchButtonChanged(_ :)), for: .valueChanged)
         return switchButton
     }()
@@ -56,7 +64,15 @@ class DateView: UIView {
     private var datePicker : UIDatePicker = {
         var datePicker = UIDatePicker()
         datePicker.isHidden = true
+//                datePicker.backgroundColor = .white
+//                datePicker.layer.cornerRadius = 10
+//                datePicker.layer.masksToBounds = true
         datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+                
+//                datePicker.layer.shadowColor = UIColor.black.cgColor
+//                datePicker.layer.shadowOpacity = 0.2
+//                datePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
+                
         
         return datePicker
     }()
@@ -64,16 +80,31 @@ class DateView: UIView {
     private let generalStackView : UIStackView = {
         let generalStackView  = UIStackView()
         generalStackView.axis = .vertical
-        generalStackView.backgroundColor = .purple
+        generalStackView.backgroundColor = UIColor(named: "BaseReminderComponentBackgroundColor")
         generalStackView.distribution = .fill
-        generalStackView.spacing = 16
+    
+            generalStackView.layer.cornerRadius = 12
+            generalStackView.layer.shadowColor = UIColor.black.cgColor
+            generalStackView.layer.shadowOffset = CGSize(width: 0, height: 2)
+            generalStackView.layer.shadowOpacity = 0.3
+            generalStackView.layer.shadowRadius = 4
+            generalStackView.layer.masksToBounds = false
         return generalStackView
+
     }()
     
     private let headerView : UIView = {
         let headerView = UIView()
-        headerView.backgroundColor = .darkGray
         return headerView
+//        let view = UIView()
+//                view.layer.cornerRadius = 10
+//                view.backgroundColor = .white
+//                view.layer.shadowColor = UIColor.black.cgColor
+//                view.layer.shadowOpacity = 0.1
+//                view.layer.shadowOffset = CGSize(width: 0, height: 2)
+//                view.layer.shadowRadius = 4
+//                return view
+      
     }()
     
     //MARK: - Getter
@@ -142,6 +173,10 @@ class DateView: UIView {
         switchButton.isUserInteractionEnabled = false
         
     }
+    
+    func setBackgroundColorOfImageView(_ color : UIColor) {
+        imageView.backgroundColor = color
+    }
 
     
     
@@ -183,6 +218,8 @@ class DateView: UIView {
         setupGeneralStackView()
         setupHeaderView()
         
+    
+        
     }
     
     
@@ -192,10 +229,10 @@ class DateView: UIView {
         generalStackView.addArrangedSubview(datePicker)
         generalStackView.translatesAutoresizingMaskIntoConstraints = false
         generalStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(8)
-            make.bottom.equalToSuperview().inset(8)
-            make.leading.equalToSuperview().inset(16)
-            make.trailing.equalToSuperview().inset(16)
+            make.top.equalToSuperview().inset(0)
+            make.bottom.equalToSuperview().inset(0)
+            make.leading.equalToSuperview().inset(0)
+            make.trailing.equalToSuperview().inset(0)
         }
     }
     
@@ -209,26 +246,32 @@ class DateView: UIView {
         labelStackView.addArrangedSubview(dateLabel)
         
         imageView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(4)
+            make.leading.equalToSuperview().offset(widthOfScreen * 0.025)
             make.centerY.equalToSuperview()
-            make.width.height.equalTo(32)
+            make.top.equalToSuperview().offset(heigtOfScreen * 0.015)
+            make.bottom.equalToSuperview().offset(heigtOfScreen * -0.015)
+            make.width.equalTo(imageView.snp.height)
+            
+
+            
         }
         
         labelStackView.snp.makeConstraints { make in
-            make.leading.equalTo(imageView.snp.trailing).offset(16)
+            make.leading.equalTo(imageView.snp.trailing).offset(widthOfScreen * 0.025)
             make.centerY.equalToSuperview()
-            make.trailing.equalTo(switchButton.snp.leading).offset(-8)
+            make.trailing.equalTo(switchButton.snp.leading).offset(widthOfScreen * -0.025)
             
             
         }
         
         switchButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-8)
+            make.trailing.equalToSuperview().offset(widthOfScreen * -0.025)
             make.centerY.equalToSuperview()
         }
         
         headerView.snp.makeConstraints { make in
-            make.height.equalTo(60)
+            make.height.equalTo(heigtOfScreen * 0.075)
+            
         }
         
         
@@ -239,14 +282,7 @@ class DateView: UIView {
     }
     
     @objc private func switchButtonChanged(_ sender: UISwitch) {
-//        viewModel.isShowDate = sender.isOn
-//        datePicker.isHidden = !viewModel.isShowDate
-//        if viewModel.isShowDate {
-//            dateLabel.isHidden = false
-//            dateLabel.text = viewModel.dateLabelText(from: datePicker.date)
-//        }else {
-//            dateLabel.isHidden = true
-//        }
+
         DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.viewModel.isShowDate = sender.isOn
@@ -265,6 +301,10 @@ class DateView: UIView {
 }
 
 
+//#Preview(""){
+//    DateView(frame: .null, datePickerMode: .date, datePickerStyle: .inline,dateViewModel: DateViewModel(imageName: "star", titleLabelString: "Date", isShowDate: false,isClock: false))
+//}
+
 #Preview(""){
-    DateView(frame: .null, datePickerMode: .date, datePickerStyle: .inline,dateViewModel: DateViewModel(imageName: "star", titleLabelString: "Date", isShowDate: false,isClock: false))
+    UINavigationController(rootViewController: ReminderEditViewController(viewModel: ReminderEditViewModel(reminder: Reminder(title: "deneme", isDone: false))))
 }

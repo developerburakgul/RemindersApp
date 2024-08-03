@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		23352DB52C57F09A00829EF1 /* ReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23352DB42C57F09A00829EF1 /* ReminderManager.swift */; };
-		23352DBB2C58011D00829EF1 /* ReminderrCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23352DBA2C58011D00829EF1 /* ReminderrCreateViewController.swift */; };
 		23352DBD2C58021B00829EF1 /* ReminderCreateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23352DBC2C58021B00829EF1 /* ReminderCreateViewModel.swift */; };
 		23352DC02C580BCF00829EF1 /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23352DBF2C580BCF00829EF1 /* DateView.swift */; };
 		2337713B2C2F0D43001B2BCC /* ReminderListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2337713A2C2F0D43001B2BCC /* ReminderListViewModel.swift */; };
@@ -30,12 +29,12 @@
 		23B04C2E2C5A28DE00BB400F /* ReminderEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B04C2D2C5A28DE00BB400F /* ReminderEditViewController.swift */; };
 		23BE31752C4118C3001A5868 /* PlaceHolderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BE31742C4118C3001A5868 /* PlaceHolderTextView.swift */; };
 		23C940482C3441C3006EC0CF /* ListTableViewCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C940472C3441C3006EC0CF /* ListTableViewCellModel.swift */; };
+		23E563DF2C5E58DE002A404C /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E563DE2C5E58DE002A404C /* Notification.swift */; };
 		23EA714C2C581C4400461A02 /* DateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EA714B2C581C4400461A02 /* DateViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		23352DB42C57F09A00829EF1 /* ReminderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderManager.swift; sourceTree = "<group>"; };
-		23352DBA2C58011D00829EF1 /* ReminderrCreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderrCreateViewController.swift; sourceTree = "<group>"; };
 		23352DBC2C58021B00829EF1 /* ReminderCreateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCreateViewModel.swift; sourceTree = "<group>"; };
 		23352DBF2C580BCF00829EF1 /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
 		2337713A2C2F0D43001B2BCC /* ReminderListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListViewModel.swift; sourceTree = "<group>"; };
@@ -57,6 +56,7 @@
 		23B04C2D2C5A28DE00BB400F /* ReminderEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderEditViewController.swift; sourceTree = "<group>"; };
 		23BE31742C4118C3001A5868 /* PlaceHolderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHolderTextView.swift; sourceTree = "<group>"; };
 		23C940472C3441C3006EC0CF /* ListTableViewCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCellModel.swift; sourceTree = "<group>"; };
+		23E563DE2C5E58DE002A404C /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		23EA714B2C581C4400461A02 /* DateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,7 +84,6 @@
 		23352DB92C5800DF00829EF1 /* CreateScreen */ = {
 			isa = PBXGroup;
 			children = (
-				23352DBA2C58011D00829EF1 /* ReminderrCreateViewController.swift */,
 				23A454F92C5BA6A100FF6D2D /* ReminderCreateViewController.swift */,
 				23352DBC2C58021B00829EF1 /* ReminderCreateViewModel.swift */,
 			);
@@ -153,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				233771412C2F1C33001B2BCC /* Date+Extension.swift */,
+				23E563DE2C5E58DE002A404C /* Notification.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -324,7 +324,6 @@
 				23BE31752C4118C3001A5868 /* PlaceHolderTextView.swift in Sources */,
 				23EA714C2C581C4400461A02 /* DateViewModel.swift in Sources */,
 				23A454F82C5BA61400FF6D2D /* BaseReminderViewController.swift in Sources */,
-				23352DBB2C58011D00829EF1 /* ReminderrCreateViewController.swift in Sources */,
 				2368177B2C29C674002E855A /* AppDelegate.swift in Sources */,
 				23352DB52C57F09A00829EF1 /* ReminderManager.swift in Sources */,
 				23C940482C3441C3006EC0CF /* ListTableViewCellModel.swift in Sources */,
@@ -333,6 +332,7 @@
 				2368177D2C29C674002E855A /* SceneDelegate.swift in Sources */,
 				2337713E2C2F1A15001B2BCC /* Reminder.swift in Sources */,
 				23B04C2E2C5A28DE00BB400F /* ReminderEditViewController.swift in Sources */,
+				23E563DF2C5E58DE002A404C /* Notification.swift in Sources */,
 				23900D562C5BE7F5002ACF11 /* ReminderDetailViewModel.swift in Sources */,
 				23352DBD2C58021B00829EF1 /* ReminderCreateViewModel.swift in Sources */,
 				233771422C2F1C33001B2BCC /* Date+Extension.swift in Sources */,

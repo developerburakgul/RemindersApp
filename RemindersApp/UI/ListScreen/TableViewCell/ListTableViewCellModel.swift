@@ -10,21 +10,18 @@ import Foundation
 
 class ListTableViewCellModel {
     
-    
+    //MARK: - Private
     private var reminder : Reminder
     private var reminderManager : ReminderManager = ReminderManager.shared
     
+    //MARK: - Init
     init(reminder: Reminder) {
         self.reminder = reminder
     }
-    
-    
-    //MARK: - Public
-    
+    //MARK: - Public Getters and Function
     var title : String {
         reminder.title
     }
-    
     var description : String? {
         reminder.description
     }
@@ -36,7 +33,6 @@ class ListTableViewCellModel {
         return date.getDateWithDot
         
     }
-    
     var doneButtonImageName : String {
         reminder.isDone ? "circle.fill" : "circle"
     }
@@ -48,14 +44,8 @@ class ListTableViewCellModel {
         return false
     }
     
-    
     func toggleDone() {
         reminder.isDone.toggle()
         reminderManager.toggleReminder(reminder)
     }
-    
-    
-    
-    
-    
 }

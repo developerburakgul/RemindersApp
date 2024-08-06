@@ -17,28 +17,21 @@ class ReminderDetailViewController: BaseReminderViewController<ReminderDetailVie
         self.descriptionTextView.isEditable = false
         self.dateView.setOnlyShowMode()
         self.clockView.setOnlyShowMode()
-        
-        // Mevcut reminder verilerini yükleyin ve UI bileşenlerine atayın.
         loadReminderData()
     }
     
     private func loadReminderData() {
-
-        
         titleTextView.setText(viewModel.titleOfReminder)
         if let description = viewModel.descriptionOfReminder {
             descriptionTextView.setText(description)
         }
         if let date = viewModel.dateOfReminder {
-            dateView.setDate(date)
-            print("date")
+            dateView.setDate(date,isOnlyShowMode: true)
         }
         if let time = viewModel.timeOfReminder {
-            clockView.setTime(time)
-            print(time)
-            print("time")
+            clockView.setTime(time,isOnlyShowMode: true)
+         
         }
-    
     }
     
 }

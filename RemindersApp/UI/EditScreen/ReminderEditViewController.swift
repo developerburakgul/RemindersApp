@@ -16,6 +16,7 @@ class ReminderEditViewController : BaseReminderViewController<ReminderEditViewMo
         titleTextView.externalDelegate = self
         descriptionTextView.externalDelegate = self
         loadReminderData()
+        self.doneBarButton.isEnabled = true
 
     }
     
@@ -30,13 +31,10 @@ class ReminderEditViewController : BaseReminderViewController<ReminderEditViewMo
             descriptionTextView.setText(description)
         }
         if let date = viewModel.dateOfReminder {
-            dateView.setDate(date)
-            print("date")
+            dateView.setDate(date,isOnlyShowMode: false)
         }
         if let time = viewModel.timeOfReminder {
-            clockView.setTime(time)
-            print(time)
-            print("time")
+            clockView.setTime(time,isOnlyShowMode: false)
         }
 
     }

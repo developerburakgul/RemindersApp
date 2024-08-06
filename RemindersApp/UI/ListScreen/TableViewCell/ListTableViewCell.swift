@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 
 class ListTableViewCell: UITableViewCell {
-    
+    //MARK: - Identifier
     static let identifier = "ReminderListTableViewCell"
-    
+    //MARK: - Closure
     var doneButtonTappedAction: (() -> Void)?
     
     //MARK: - Private Attributes
@@ -61,24 +61,17 @@ class ListTableViewCell: UITableViewCell {
         return stackView
     }()
     
-    
-    
     //MARK: - İnit Functions
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
     //MARK: - Setup Functions
-    
-    
     private func setup() {
         setupViews()
     }
@@ -96,7 +89,6 @@ class ListTableViewCell: UITableViewCell {
             make.width.equalToSuperview().multipliedBy(0.1)
             make.height.equalTo(doneButton.snp.width)
         }
-        
     }
     
     private func setupStackView() {
@@ -110,13 +102,10 @@ class ListTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(dateLabel)
-        
     }
     
     //MARK: - Private Functions
-    
-    
-    
+
     private func updateUI() {
         guard let viewModel = self.viewModel else { return  }
         self.titleLabel.text = viewModel.title
@@ -125,27 +114,19 @@ class ListTableViewCell: UITableViewCell {
         self.dateLabel.textColor = viewModel.isLateDate ? .red : .secondaryLabel
         self.doneButton.setImage(UIImage(systemName: viewModel.doneButtonImageName), for: .normal)
     }
-    
-    
     //MARK: - Public Functions
     
     func configure(with viewModel: ListTableViewCellModel) {
         self.viewModel = viewModel
-        
     }
     
     @objc private func doneButtonTapped() {
         viewModel?.toggleDone()
         doneButtonTappedAction?()
-        
     }
-    
-    
-    
 }
 
 #Preview(""){
     ListTableViewCell(style: .default, reuseIdentifier: ListTableViewCell.identifier)
-    
 }
 

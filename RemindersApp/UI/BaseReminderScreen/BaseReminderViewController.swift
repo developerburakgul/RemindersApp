@@ -8,7 +8,7 @@
 import UIKit
 
 class BaseReminderViewController<ViewModelType>: UIViewController {
-    
+    //MARK: - Sizes of Screen
     private let heigtOfScreen = UIScreen.main.bounds.height
     private let widthOfScreen = UIScreen.main.bounds.width
     
@@ -52,7 +52,6 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
         titleTextView.backgroundColor = UIColor(named: "BaseReminderComponentBackgroundColor")
         titleTextView.font = UIFont.systemFont(ofSize: 24)
         titleTextView.isScrollEnabled = false
-        
         return titleTextView
     }()
     
@@ -60,24 +59,18 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
         let descriptionTextView = PlaceHolderTextView(frame: .null, textContainer: .none, placeholder: "Description...", placeholderColor: .secondaryLabel)
         descriptionTextView.backgroundColor = UIColor(named: "BaseReminderComponentBackgroundColor")
         descriptionTextView.isScrollEnabled = false
-        
         descriptionTextView.font = UIFont.systemFont(ofSize: 24)
-        
-        
         return descriptionTextView
     }()
     
     var dateView: DateView = {
         let dateView = DateView(frame: .null, datePickerMode: .date, datePickerStyle: .inline, dateViewModel: DateViewModel(imageName: "calendar", titleLabelString: "Date", isShowDate: false, isClock: false))
         dateView.setSelectable(minDate: Date())
-//        dateView.backgroundColor = UIColor(named: "BaseReminderComponentBackgroundColor")
-        
         return dateView
     }()
     
     var clockView: DateView = {
         let clockView = DateView(frame: .null, datePickerMode: .time, datePickerStyle: .wheels, dateViewModel: DateViewModel(imageName: "clock.fill", titleLabelString: "Clock", isShowDate: false, isClock: true))
-//        clockView.backgroundColor = UIColor(named: "BaseReminderComponentBackgroundColor")
         clockView.setBackgroundColorOfImageView(.systemBlue)
         
         return clockView
@@ -90,15 +83,12 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
         setup()
         titleTextView.externalDelegate = self as? any UITextViewDelegate
         descriptionTextView.externalDelegate = self as? any UITextViewDelegate
-        
-        print("base reminder view controller view did load")
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
-        print("base reminder view controller view will appear")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -131,7 +121,6 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
         setupDateView()
         setupClockView()
         setupGestureRecognizer()
-        
     }
     
     private func setupScrollView() {
@@ -165,9 +154,7 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
             make.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(heigtOfScreen * 0.025 )
             make.left.equalToSuperview().offset(widthOfScreen * 0.05)
             make.right.equalToSuperview().offset(widthOfScreen * -0.05)
-//            make.height.greaterThanOrEqualTo(60)
             make.height.greaterThanOrEqualTo(heigtOfScreen * 0.075)
-           
         }
     }
     
@@ -178,9 +165,7 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
             make.top.equalTo(titleTextView.snp.bottom).offset(heigtOfScreen * 0.025)
             make.left.equalTo(titleTextView.snp.left)
             make.right.equalTo(titleTextView.snp.right)
-            
             make.height.greaterThanOrEqualTo(heigtOfScreen * 0.075)
-            
         }
     }
     
@@ -191,8 +176,6 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
             make.top.equalTo(descriptionTextView.snp.bottom).offset(heigtOfScreen * 0.05)
             make.left.equalTo(descriptionTextView.snp.left)
             make.right.equalTo(descriptionTextView.snp.right)
-            
-            
         }
     }
     
@@ -217,7 +200,6 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
         view.endEditing(true)  // Tüm aktif text field veya text view'ları kapatır.
     }
     
-    
     @objc func cancelTapped() {
         self.dismiss(animated: true, completion: nil)
         print(#function)
@@ -231,17 +213,13 @@ class BaseReminderViewController<ViewModelType>: UIViewController {
     
     func textViewDidChange(_ textView: UITextView) {
         // Base class, textView changes should be handled in derived classes if needed
-        
         let size = CGSize(width: view.frame.width, height: .infinity)
         let estimatedSize = textView.sizeThatFits(size)
         
         textView.snp.updateConstraints { make in
             make.height.equalTo(estimatedSize.height)
         }
-        
-        
     }
-    
 }
 
 

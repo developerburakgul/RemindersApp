@@ -15,8 +15,6 @@ class ReminderCreateViewModel {
     
     
     func saveReminder(_ title : String , _ description : String?,_ calendarDate : Date? ,_ clockDate : Date?)  {
-        print("\(calendarDate)" + "calendar ")
-        print("\(clockDate)" + "clock ")
         let clockDate = getHourAndMinute(clockDate)
         let calendarDate = getDayMonthAndYear(calendarDate)
         let reminder = Reminder(title: title, description: description, isDone: false,date: calendarDate,time: clockDate)
